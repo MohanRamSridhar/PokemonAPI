@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -7,6 +8,9 @@ const pokemons = [
     { id: 1, name: 'Bulbasaur', type: 'Grass', abilities: ['Overgrow'], baseStats: { hp: 45, attack: 49, defense: 49, speed: 45 } },
     // Add more Pokémon data here...
 ];
+
+// Use CORS middleware
+app.use(cors());
 
 // Get Pokémon by ID
 app.get('/api/pokemon/:id', (req, res) => {

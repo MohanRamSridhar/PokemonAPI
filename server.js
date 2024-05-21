@@ -14,7 +14,6 @@ const pokemons = [
     { id: 7, name: 'Squirtle', type: ['Water'], abilities: ['Torrent'], baseStats: { hp: 45, attack: 45, defense: 60, speed: 45 }, weakness: ['Grass','Electric']},
     { id: 8, name: 'Wartortle', type: ['Water'], abilities: ['Torrent'], baseStats: { hp: 60, attack: 60, defense: 75, speed: 60 }, weakness: ['Grass','Electric']},
     { id: 9, name: 'Blastoise', type: ['Water'], abilities: ['Torrent'], baseStats: { hp: 75, attack: 75, defense: 90, speed: 75 }, weakness: ['Grass','Electric']},
-    //hi
     //refer Pokedex website for pokemon information https://www.pokemon.com/us/pokedex
     // Add more Pokémon data here...
 ];

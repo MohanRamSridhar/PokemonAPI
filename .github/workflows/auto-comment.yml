@@ -1,0 +1,32 @@
+name: Auto Comment and Close Issues on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  auto-comment:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Add Comment on Merged PR
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ${{ github.repository }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          Thank you @${{ github.event.pull_request.user.login }} for your contribution!
+          The related issue will be closed shortly.
+
+    - name: Close Linked Issues
+      if: contains(github.event.pull_request.body, '#')
+      run: |
+        issues=$(echo "${{ github.event.pull_request.body }}" | grep -oE "#[0-9]+" | tr -d '#')
+        for issue in $issues; do
+          curl -s -X PATCH -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/issues/$issue" -d '{"state":"closed"}'
+        done

@@ -5,7 +5,8 @@ const PORT = process.env.PORT || 3000;
 
 // Example Pokémon data
 const pokemons = [
-    { id: 1, name: 'Bulbasaur', type: 'Grass', abilities: ['Overgrow'], baseStats: { hp: 45, attack: 49, defense: 49, speed: 45 } },
+    { id: 1, name: 'Bulbasaur', type: ['Grass'], abilities: ['Overgrow'], baseStats: { hp: 45, attack: 45, defense: 45, speed: 45 }, weakness: ['Fire','Ice','Flying','Psychic']},
+    //refer Pokedex website for pokemon information https://www.pokemon.com/us/pokedex
     // Add more Pokémon data here...
 ];
 

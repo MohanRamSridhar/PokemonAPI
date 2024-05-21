@@ -23,7 +23,7 @@
                     // Display the Pokémon information on the page
                     document.getElementById('pokemonInfo').innerHTML = `
                         <h2>${data.name}</h2>
-                        <p>Type: ${data.type}</p>
+                        <p>Type: ${data.type.join(', ')}</p>
                         <p>Abilities: ${data.abilities.join(', ')}</p>
                     `;
                 })

@@ -1,0 +1,23 @@
+name: Auto Comment on PR Creation
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Post comment on PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_USER: ${{ github.event.pull_request.user.login }}
+        run: |
+          curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+            -d '{"body": "Thank you @${PR_USER} for your contribution! Your PR is now under review."}' \
+            https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments

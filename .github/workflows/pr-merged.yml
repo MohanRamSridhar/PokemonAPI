@@ -24,6 +24,8 @@ jobs:
         echo "issue_number=$issue_number" >> $GITHUB_ENV
 
     - name: Comment on the merged PR
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
       uses: actions/github-script@v6
       with:
         script: |
@@ -40,6 +42,8 @@ jobs:
 
     - name: Close the related issue
       if: env.issue_number != ''
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
       uses: actions/github-script@v6
       with:
         script: |

@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Extract issue number from PR body
       id: extract_issue
       run: |
@@ -25,7 +28,8 @@ jobs:
       with:
         script: |
           const prNumber = context.issue.number;
-          const commentBody = `The PR has been merged successfully! 🎉 The related issue #${process.env.issue_number} will be closed.`;
+          const issueNumber = process.env.issue_number;
+          const commentBody = `The PR has been merged successfully! 🎉 The related issue #${issueNumber} will be closed.`;
 
           await github.rest.issues.createComment({
             owner: context.repo.owner,

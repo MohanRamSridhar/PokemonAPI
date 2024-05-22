@@ -1,0 +1,27 @@
+name: PR Review Workflow
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  pr-under-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Add 'under review' label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: 'under review'
+
+      - name: Comment on the PR
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: 'Thank you for your PR 😄 It is now under review.'

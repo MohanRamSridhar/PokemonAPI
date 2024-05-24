@@ -16,7 +16,7 @@ jobs:
           script: |
             const { owner, repo, number } = context.issue;
             const commentauthor = context.payload.issue.user.login;
-            const commentBody = `Hello @${commentauthor} Thank you for creating a new issue! 🎉 Your issue is currently under review./nIf you would like to assign this issue to yourself, please comment with the word "self" and the issue will be assigned to you.`;
+            const commentBody = `Hello @${commentauthor} Thank you for creating a new issue! 🎉 Your issue is currently under review.\nIf you would like to assign this issue to yourself, please comment with the word "self" and the issue will be assigned to you.`;
 
             await github.issues.createComment({ owner, repo, issue_number: number, body: commentBody });
             console.log(`Commented on the issue: ${commentBody}.`);

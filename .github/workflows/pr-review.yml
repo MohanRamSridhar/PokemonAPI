@@ -1,21 +1,23 @@
-name: PR Review Workflow
-
+name: Pull Request related comments
 on:
-  pull_request:
-    types: [opened]
-
+  pull_request_target:
+    types:
+      - opened
+  
 jobs:
-  pr-under-review:
+  comment:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Comment on the PR
-        uses: peter-evans/create-or-update-comment@v1
+      - name: Comment on Opening Pull Request
+        uses: actions/github-script@v4
         with:
-          token: ${{ secrets.PAT }}
-          repository: ${{ github.repository }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: 'Thank you for your PR. It is now under review.'
+          github-token: ${{ secrets.PAT }}
+          script: |
+            const {owner, repo, number} = context.issue;
+            const commentAuthor = context.payload.sender.login;
+            const commentBody = `Hey @${ commentAuthor }, Thank you for creating PR! We will review it super soon. 😇❣️
+            Don’t forget to ⭐ our repository!
+            Happy Coding!✨
+            Will See you soon❣️ `;
+            await github.issues.createComment({owner, repo, issue_number : number, body: commentBody});
+            console.log('Commented on PR');

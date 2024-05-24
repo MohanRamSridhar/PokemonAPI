@@ -1,29 +1,24 @@
-name: Comment on New Issues
-
+name: Comment on opening issue!
 on:
   issues:
-    types: [opened]
-
-permissions:
-  issues: write  # Ensure the workflow has write permissions for issues
+    types:
+      - opened
 
 jobs:
   comment:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Post a comment on the new issue
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const {owner, repo, number} = context.issue;
-          const commentAuthor = context.payload.sender.login;
-          const issueNumber = context.issue.number;
-          const commentBody = `Thank you for creating a new issue! 🎉 Your issue is currently under review. If you would like to assign this issue to yourself, please comment with the word **"self"** and the issue will be assigned to you.`;
+      - name: Issue Opened
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.APIVerse_SECRET }}
+          script: |
+            const { owner, repo, number } = context.issue;
+            const commentauthor = context.payload.issue.user.login;
+            const commentBody = `Hello @${commentauthor} Thank you for creating a new issue! 🎉 Your issue is currently under review./nIf you would like to assign this issue to yourself, please comment with the word "self" and the issue will be assigned to you.`;
 
-          await github.rest.issues.createComment({
-            owner,
-            repo,
-            issue_number : number,
-            body: commentBody
-          });
+            await github.issues.createComment({ owner, repo, issue_number: number, body: commentBody });
+            console.log(`Commented on the issue: ${commentBody}.`);
+
+

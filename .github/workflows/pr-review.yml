@@ -17,6 +17,6 @@ jobs:
             const commentAuthor = context.payload.sender.login;
             const commentBody = `Hey @${ commentAuthor }, Thank you for creating PR! Will review it super soon.
             Don’t forget to ⭐ the repository!
-            Will see you soon❣️ `;
+            Will see you soon!`;
             await github.issues.createComment({owner, repo, issue_number : number, body: commentBody});
             console.log('Commented on PR');

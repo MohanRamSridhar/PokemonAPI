@@ -16,12 +16,14 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
+          const {owner, repo, number} = context.issue;
+          const commentAuthor = context.payload.sender.login;
           const issueNumber = context.issue.number;
           const commentBody = `Thank you for creating a new issue! 🎉 Your issue is currently under review. If you would like to assign this issue to yourself, please comment with the word **"self"** and the issue will be assigned to you.`;
 
           await github.rest.issues.createComment({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: issueNumber,
+            owner,
+            repo,
+            issue_number : number,
             body: commentBody
           });
